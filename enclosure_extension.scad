@@ -40,50 +40,16 @@ PROTO_RAIL_HEIGHT = 12.7;
 
 CASE_THICKNESS = 2.51;
 CASE_LIP_WIDTH = 12.7;
-
-/**
- * creates the positive body of an led strip
-*/
-module led_strip(
-    l, /* l - length of the led strip */
-    w, /* w - width of the led strip  */
-    h, /* h - height of the led strip */
-    lt = NO_TOLERANCE, /* lt - length tolerance of the led strip */
-    wt = NO_TOLERANCE, /* wt - width tolerance of the led strip  */
-    ht = NO_TOLERANCE  /* ht - height tolerance of the led strip */
-    ) { 
-    cube([w + (2 * wt), l + (2 * lt), h + ht], true);
-    echo("w = ", w);
-}
-
-module led_holder(
-    l,  /* length of the holder */
-    w,  /* width of the holder  */
-    h,  /* height of the holder */
-    ll, /* length of the led strip */
-    lw, /* width of the led strip  */
-    lh, /* height of the led strip */
-    lt = 3DP_MEDIUM_TOLERANCE, /* length tolerance of the led strip */
-    wt = 3DP_MEDIUM_TOLERANCE, /* width tolerance of the led strip  */
-    ht = 3DP_MEDIUM_TOLERANCE, /* height tolerance of the led strip */
-    negative = false  /* ht - height tolerance of the led strip */
-    ) {
-    dh = (h - lh) / 2;
-    difference() {
-        cube([w, l, h], true);
-        translate([0, 0, dh]) led_strip(ll, lw, lh, lt, wt, ht);
-    }
     
-    echo("l = ", l);
-    echo("w = ", w);
-    echo("h = ", h);
-    echo("ll = ", ll);
-    echo("lw = ", lw);
-    echo("lh = ", lh);
-    echo("lt = ", lt);
-    echo("wt = ", wt);
-    echo("ht = ", ht);
-}
+//    echo("l = ", l);
+//    echo("w = ", w);
+//    echo("h = ", h);
+//    echo("ll = ", ll);
+//    echo("lw = ", lw);
+//    echo("lh = ", lh);
+//    echo("lt = ", lt);
+//    echo("wt = ", wt);
+//    echo("ht = ", ht);
 
 module negative(
     l,  /* length of the holder */
@@ -137,5 +103,4 @@ module rail(
 
 //negative(PROTO_LED_HOLDER_LENGTH, PROTO_LED_HOLDER_WIDTH, PROTO_LED_HOLDER_HEIGHT, PROTO_LED_BAR_LENGTH, PROTO_LED_BAR_WIDTH, PROTO_LED_BAR_HEIGHT);
 
-//led_holder(PROTO_LED_HOLDER_LENGTH, PROTO_LED_HOLDER_WIDTH, PROTO_LED_HOLDER_HEIGHT, PROTO_LED_BAR_LENGTH, PROTO_LED_BAR_WIDTH, PROTO_LED_BAR_HEIGHT);
 rail(PROTO_RAIL_LENGTH, PROTO_RAIL_WIDTH, PROTO_RAIL_HEIGHT, PROTO_LED_HOLDER_LENGTH, PROTO_LED_HOLDER_WIDTH, PROTO_LED_HOLDER_HEIGHT, PROTO_LED_BAR_LENGTH, PROTO_LED_BAR_WIDTH, PROTO_LED_BAR_HEIGHT);
