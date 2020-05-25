@@ -95,9 +95,10 @@ module rail(
     dh = hw/2 * sqrt(2);
     
     //union() {
-        difference() {
-            translate([0, 0, 0]) color("dodgerblue", 1.0) cube([dh*2+4.45, l, dh+4], true);
+        rotate([90, 0, 0]) difference() {
+            color("dodgerblue", 1.0) cube([dh*2+4.45, l, dh+4], true);
             translate([-dh, 0, -dh/2]) rotate([0, 225, 0]) color("aquamarine", 1.0) negative(hl, hw, hh, ll, lw, lh, lt, wt, ht);
+            translate([CASE_LIP_WIDTH/2-.5, 0, 0]) cube([CASE_LIP_WIDTH, l+.2, CASE_THICKNESS], true);
     }
 }
 
