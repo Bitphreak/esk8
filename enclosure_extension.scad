@@ -16,7 +16,6 @@ ENCLOSURE_LENGTH = 533.4;
 ENCLOSURE_WIDTH = 184.14;
 ENCLOSURE_HEIGHT = 44.45;
 
-LED_BAR_LENGTH = ENCLOSURE_LENGTH;
 LED_BAR_WIDTH = 12;
 LED_BAR_HEIGHT = 4;
 
@@ -24,32 +23,16 @@ LED_LENGTH = 5;
 LED_WIDTH = 5;
 LED_HEIGHT = 5;
 
-LED_BAR_LENGTH = 72;
-LED_BAR_WIDTH = 12;
-LED_BAR_HEIGHT = 4;
-
 LED_HOLDER_WALLS = 2;
-
-LED_HOLDER_LENGTH = LED_BAR_LENGTH;
 LED_HOLDER_WIDTH = LED_BAR_WIDTH + LED_HOLDER_WALLS;
 LED_HOLDER_HEIGHT = LED_BAR_HEIGHT + LED_HOLDER_WALLS;
 
-RAIL_LENGTH = LED_BAR_LENGTH;
+RAIL_LENGTH = ENCLOSURE_LENGTH;
 RAIL_WIDTH = 25.4;
 RAIL_HEIGHT = 12.7;
 
 CASE_THICKNESS = 2.51;
 CASE_LIP_WIDTH = 12.7;
-    
-//    echo("l = ", l);
-//    echo("w = ", w);
-//    echo("h = ", h);
-//    echo("ll = ", ll);
-//    echo("lw = ", lw);
-//    echo("lh = ", lh);
-//    echo("lt = ", lt);
-//    echo("wt = ", wt);
-//    echo("ht = ", ht);
 
 module negative(
     dh, /* dh */
@@ -74,7 +57,9 @@ module negative(
 */
 module rail(
     l,   /* length of the rail */
-    hl,  /* length of the holder */
+    dh, /* dh */
+    top, /* top */
+    offset, /* offset */
     hw,  /* width of the holder  */
     hh,  /* height of the led strip */
     ll,  /* length of the led strip */
@@ -82,22 +67,41 @@ module rail(
     lh,  /* height of the led strip */
     clp, /* width of case lip */
     ct, /* thickness of case */
-    lt = 3DP_MEDIUM_TOLERANCE, /* lt - length tolerance of the led strip */
-    wt = 3DP_MEDIUM_TOLERANCE, /* wt - width tolerance of the led strip  */
-    ht = 3DP_MEDIUM_TOLERANCE  /* ht - height tolerance of the led strip */
+    lt = 3DP_MEDIUM_TOLERANCE, /* length tolerance of the led strip */
+    wt = 3DP_MEDIUM_TOLERANCE, /* width tolerance of the led strip  */
+    ht = 3DP_MEDIUM_TOLERANCE,  /* height tolerance of the led strip */
+    debug = false
     ) {
-    dh = hw/2 * sqrt(2);
-    top = dh/2;
-    offset = lh/2 + top + .1;
-
     
     //union() {
         /*rotate([90, 0, 0])*/
         difference() {
             color("dodgerblue", 1.0) cube([dh*2+4.45, l, dh+4], true);
-            translate([-dh, 0, -dh/2]) rotate([0, 225, 0]) color("aquamarine", 1.0) negative(dh, top, offset, hl, lw, lt, wt, ht);
+            translate([-dh, 0, -dh/2]) rotate([0, 225, 0]) color("aquamarine", 1.0) negative(dh, top, offset, l, lw, lt, wt, ht);
             translate([CASE_LIP_WIDTH/2-.5, 0, 0]) cube([clp, l+.2, ct], true);
     }
 }
 
-rail(RAIL_LENGTH, LED_HOLDER_LENGTH, LED_HOLDER_WIDTH, LED_HOLDER_HEIGHT, CASE_LIP_WIDTH, CASE_THICKNESS, LED_BAR_LENGTH, LED_BAR_WIDTH, LED_BAR_HEIGHT);
+module enclosure_extension(debug = false){
+    // Calculate Dimensions
+    dh = LED_HOLDER_WIDTH / 2 * sqrt(2);
+    top = dh/2;
+    offset = lh/2 + top + .1;
+
+    if (debug) {
+        echo("l = ", l);
+        echo("w = ", w);
+        echo("h = ", h);
+        echo("ll = ", ll);
+        echo("lw = ", lw);
+        echo("lh = ", lh);
+        echo("lt = ", lt);
+        echo("wt = ", wt);
+        echo("ht = ", ht);
+    }
+    
+    rail(RAIL_LENGTH, dh, top, offset, LED_HOLDER_WIDTH, LED_HOLDER_HEIGHT, RAIL_LENGTH, LED_BAR_WIDTH, LED_BAR_HEIGHT, CASE_LIP_WIDTH, CASE_THICKNESS);
+
+}
+
+enclosure_extension();
