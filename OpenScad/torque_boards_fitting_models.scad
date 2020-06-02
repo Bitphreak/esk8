@@ -20,8 +20,7 @@ module horizontal_hole_fitting(
     ){
         length = diameter * 3;  
         union(){
-            for (i = [0 : 1 : 3]) { /*steps -1*/
-                //l = length * i;
+            for (i = [0 : 1 : steps - 1]) {
                 l = length/2 + (length * i);
                 echo("step:", i);
                 echo("width:", (sw + i * step)/2);
@@ -32,8 +31,29 @@ module horizontal_hole_fitting(
         }
 }
 
+module width_gauge(
+    sw,       /* starting width */
+    height,   /* height */
+    length, /* diameter of hole */
+    step,    /* how much to increase width for each step */
+    steps     /* how many steps to take */
+    ){
+        union(){
+            for (i = [0 : 1 : steps - 1]) {
+                l = length/2 + (length * i);
+                echo("step:", i);
+                echo("width:", (sw + i * step)/2);
+                echo("length:", l);
+                translate([(sw + i * step)/2, l, 0])
+                    cube([sw + i * step, length,  height], true);
+            }
+        }
+}
+
+
 RAIL_WIDTH = 22;
-RAIL_HEIGHT = 12;
+RAIL_HEIGHT = 8;
 HOLE_DIAMETER = 4.2;
 
-horizontal_hole_fitting(11, RAIL_HEIGHT, HOLE_DIAMETER, 2.75, 4);
+//horizontal_hole_fitting(11, RAIL_HEIGHT, HOLE_DIAMETER, 2.75, 4);
+width_gauge(5.5, RAIL_HEIGHT, 6, 2.75, 6);
