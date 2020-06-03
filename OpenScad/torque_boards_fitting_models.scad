@@ -50,10 +50,24 @@ module width_gauge(
         }
 }
 
+module radius_gauge(
+    diameter, /* diameter of the curve */
+    height   /* height of the gauge */
+){
+
+cylinder(d = diameter, true);
+
+}
 
 RAIL_WIDTH = 22;
 RAIL_HEIGHT = 8;
 HOLE_DIAMETER = 4.2;
 
 //horizontal_hole_fitting(11, RAIL_HEIGHT, HOLE_DIAMETER, 2.75, 4);
-width_gauge(5.5, RAIL_HEIGHT, 6, 2.75, 6);
+//width_gauge(5.5, RAIL_HEIGHT, 6, 2.75, 6);
+//radius_gauge(25.4, RAIL_HEIGHT);
+//radius_gauge(28.5, RAIL_HEIGHT);
+//radius_gauge(31.75, RAIL_HEIGHT);
+//radius_gauge(35, RAIL_HEIGHT);
+//radius_gauge(38, RAIL_HEIGHT);
+radius_gauge(42, RAIL_HEIGHT);
