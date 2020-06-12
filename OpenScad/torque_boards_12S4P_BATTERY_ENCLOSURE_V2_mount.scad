@@ -200,6 +200,23 @@ module torque_mount(
     }
 }
 
+module end_cap(
+    length,
+    width,
+    diameter,
+    height
+){
+    union() {
+        intersection() {
+            cylinder(d = diameter, true);
+        }
+    
+    }
+}
+
+// left to right beam is 5.5 mm
+// front to back beam is 19.25 mm wide
+
 torque_mount(
     ENCLOSURE_EXTERNAL_LENGTH,
     ENCLOSURE_EXTERNAL_WIDTH,
